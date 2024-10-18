@@ -36,11 +36,16 @@ function createController() {
 }
 
 
+/***
+ * Generates the ui element on the damage container on the player
+ */
 function createIndicator() {
 	var player: Character = self.getOwner();
 	var container: Container = player.getDamageCounterContainer();
-	var resource: String = player.getAssistContentStat("spriteContent") + "critical";
+	var resource: String = player.getAssistContentStat("spriteContent") + "suddenDeath";
 	var sprite = Sprite.create(resource);
+	Engine.log(resource);
+
 	sprite.scaleY = 0.6;
 	sprite.scaleX = 0.6;
 	sprite.y = sprite.y + 12;
@@ -78,6 +83,7 @@ function enableSuddenDeath() {
 			return true;
 		}, []);
 	}
+	createIndicator();
 	createController();
 }
 

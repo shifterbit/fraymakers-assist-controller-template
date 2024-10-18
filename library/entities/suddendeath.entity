@@ -244,12 +244,13 @@
   "pluginMetadata": {
   },
   "plugins": [
+    "com.fraymakers.FraymakersMetadata"
   ],
   "symbols": [
     {
       "$id": "5629f9f1-008a-497c-b458-16e37126bf7f",
       "alpha": 1,
-      "imageAsset": "4552e2d3-137b-47b5-86f8-b64d90a7d45a",
+      "imageAsset": "2b47dd51-4e9e-4a8f-98d0-d8728bc2d8b8",
       "pivotX": 41,
       "pivotY": 21,
       "pluginMetadata": {
