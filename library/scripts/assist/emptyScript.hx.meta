@@ -1,0 +1,18 @@
+{
+  "export": true,
+  "guid": "ad8e4424-fc19-4c55-9e90-9756f9bd2ff0",
+  "id": "nothingScript",
+  "language": "",
+  "pluginMetadata": {
+    "com.fraymakers.FraymakersMetadata": {
+      "objectType": "ASSIST",
+      "version": "0.3.0"
+    }
+  },
+  "plugins": [
+    "com.fraymakers.FraymakersMetadata"
+  ],
+  "tags": [
+  ],
+  "version": 1
+}

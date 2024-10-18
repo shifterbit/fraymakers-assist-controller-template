@@ -1,0 +1,45 @@
+{
+  "resourceId": "suddenDeath",
+  "content": [
+    {
+      "id": "suddenDeath",
+      "name": "Sudden Death",
+      "description": "Every Hit is Fatal!",
+      "type": "assist",
+      "objectStatsId": "assisttemplateAssistObjectStats",
+      "animationStatsId": "assisttemplateAnimationStats",
+      "hitboxStatsId": "assisttemplateHitboxStats",
+      "scriptId": "nothingScript",
+      "costumesId": "assisttemplateCostumes",
+      "assistControllerId": "suddenDeathController",
+      "metadata": {
+        "ui": {
+          "entityId": "menu",
+          "render": {
+            "animation": "assist_full",
+            "animation_icon_no_palette": "assist_css"
+          },
+          "hud": {
+            "animation": "assist_hud"
+          },
+          "css": {
+            "animation": "assist_css",
+            "info": {
+              "game": "Fraymakers",
+              "description": "Allows for critical Hits during a match"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "controller",
+      "type": "customGameObject"
+    },
+    {
+      "id": "suddenDeathController",
+      "type": "assistController",
+      "scriptId": "suddenDeathScript"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "export": true,
+  "guid": "c86908ec-03e1-461b-a7f3-5d2e0f12372a",
+  "id": "suddenDeathScript",
+  "language": "hscript",
+  "pluginMetadata": {
+    "com.fraymakers.FraymakersMetadata": {
+      "objectType": "ASSIST",
+      "version": "0.3.0"
+    }
+  },
+  "plugins": [
+  ],
+  "tags": [
+  ],
+  "version": 1
+}

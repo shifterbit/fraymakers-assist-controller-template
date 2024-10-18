@@ -1,0 +1,112 @@
+{
+  "animations": [
+    {
+      "$id": "a623adb9-4a0e-4005-a626-3e2d258c4c3a",
+      "layers": [
+        "b92d715a-7645-4255-9245-e6fb246a4162"
+      ],
+      "name": "idle",
+      "pluginMetadata": {
+      }
+    }
+  ],
+  "export": true,
+  "guid": "7d894719-cac4-440b-9836-0d0afdb686c0",
+  "id": "assist",
+  "keyframes": [
+    {
+      "$id": "f827ae05-d841-48c5-be2e-0a7f4651e380",
+      "length": 53,
+      "pluginMetadata": {
+      },
+      "symbol": "f70478e9-f726-42d0-b4f9-492e6398598e",
+      "tweenType": "LINEAR",
+      "tweened": false,
+      "type": "IMAGE"
+    },
+    {
+      "$id": "8cb6dd72-da08-4ca7-8d59-d024f34e8c09",
+      "length": 2,
+      "pluginMetadata": {
+      },
+      "symbol": null,
+      "tweenType": "LINEAR",
+      "tweened": false,
+      "type": "IMAGE"
+    },
+    {
+      "$id": "f7c5407d-8ccb-4922-9adf-9db4bfb64c90",
+      "length": 2,
+      "pluginMetadata": {
+      },
+      "symbol": null,
+      "tweenType": "LINEAR",
+      "tweened": false,
+      "type": "IMAGE"
+    },
+    {
+      "$id": "0aabb3b4-2f1e-4ece-90b0-5f2e9bcc1873",
+      "length": 3,
+      "pluginMetadata": {
+      },
+      "symbol": null,
+      "tweenType": "LINEAR",
+      "tweened": false,
+      "type": "IMAGE"
+    }
+  ],
+  "layers": [
+    {
+      "$id": "b92d715a-7645-4255-9245-e6fb246a4162",
+      "hidden": false,
+      "keyframes": [
+        "f827ae05-d841-48c5-be2e-0a7f4651e380",
+        "8cb6dd72-da08-4ca7-8d59-d024f34e8c09",
+        "f7c5407d-8ccb-4922-9adf-9db4bfb64c90",
+        "0aabb3b4-2f1e-4ece-90b0-5f2e9bcc1873"
+      ],
+      "locked": false,
+      "name": "Image Layer",
+      "pluginMetadata": {
+      },
+      "type": "IMAGE"
+    }
+  ],
+  "paletteMap": {
+    "paletteCollection": "98a5e90f-0953-4f26-ac94-1ec5a763849f",
+    "paletteMap": "7d194037-3990-4de8-b41f-8519ec400486"
+  },
+  "pluginMetadata": {
+    "com.fraymakers.FraymakersMetadata": {
+      "objectType": "ASSIST",
+      "version": "0.3.0"
+    }
+  },
+  "plugins": [
+    "com.fraymakers.FraymakersMetadata"
+  ],
+  "symbols": [
+    {
+      "$id": "f70478e9-f726-42d0-b4f9-492e6398598e",
+      "alpha": 1,
+      "imageAsset": "2698038c-935f-434b-9fba-b72fe1a8f419",
+      "pivotX": 128,
+      "pivotY": 128,
+      "pluginMetadata": {
+      },
+      "rotation": 0,
+      "scaleX": 0.29,
+      "scaleY": 0.18,
+      "type": "IMAGE",
+      "x": -41,
+      "y": -24
+    }
+  ],
+  "tags": [
+  ],
+  "terrains": [
+  ],
+  "tilesets": [
+  ],
+  "version": 14
+}
