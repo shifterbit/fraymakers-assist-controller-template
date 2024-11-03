@@ -1,8 +1,8 @@
 {
-  "resourceId": "suddenDeath",
+  "resourceId": "specialmodetemplate",
   "content": [
     {
-      "id": "suddenDeath",
+      "id": "speciammodetemplate",
       "name": "Sudden Death",
       "description": "Every Hit is Fatal!",
       "type": "assist",
@@ -11,7 +11,7 @@
       "hitboxStatsId": "assisttemplateHitboxStats",
       "scriptId": "nothingScript",
       "costumesId": "assisttemplateCostumes",
-      "assistControllerId": "suddenDeathController",
+      "assistControllerId": "specialModeController",
       "metadata": {
         "ui": {
           "entityId": "menu",
@@ -26,7 +26,7 @@
             "animation": "assist_css",
             "info": {
               "game": "Fraymakers",
-              "description": "Allows for critical Hits during a match"
+              "description": "Puts you in sudden death mode"
             }
           }
         }
@@ -37,9 +37,9 @@
       "type": "customGameObject"
     },
     {
-      "id": "suddenDeathController",
+      "id": "specialModeController",
       "type": "assistController",
-      "scriptId": "suddenDeathScript"
+      "scriptId": "specialmodetemplateScript"
     }
   ]
 }

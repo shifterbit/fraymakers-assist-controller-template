@@ -14,7 +14,7 @@
   ],
   "export": true,
   "guid": "502ca2cc-7898-4e0e-aeab-f6c930324623",
-  "id": "suddenDeath",
+  "id": "modeIndicator",
   "keyframes": [
     {
       "$id": "82f5fa76-84a1-467f-845a-e2a09245e753",
@@ -242,6 +242,9 @@
     "paletteMap": null
   },
   "pluginMetadata": {
+    "com.fraymakers.FraymakersMetadata": {
+      "version": "0.3.0"
+    }
   },
   "plugins": [
     "com.fraymakers.FraymakersMetadata"
