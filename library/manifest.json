@@ -4,7 +4,7 @@
     {
       "id": "assistControllerTemplate",
       "name": "Assist Controller Template",
-      "description": "Demonstrates what the assist controller can do",
+      "description": "Demonstrates what the assist controller can do, taunt when meter is full",
       "type": "assist",
       "objectStatsId": "assisttemplateAssistObjectStats",
       "animationStatsId": "assisttemplateAnimationStats",
@@ -26,7 +26,7 @@
             "animation": "assist_css",
             "info": {
               "game": "Fraymakers",
-              "description": "Puts you in sudden death mode"
+              "description": "Taunt when the meter is full"
             }
           }
         }

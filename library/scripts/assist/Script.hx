@@ -1,13 +1,14 @@
 var enabled = self.makeBool(false);
 var prefix = "";
-var modeName = "suddenDeath"; // CHANGE THIS TO SOMETHING UNIQUE
+var modeName = "rageMode"; // CHANGE THIS TO SOMETHING UNIQUE
 var globalDummy: Projectile = null; // We can create a projectile and assign it to this temporarily in case we need timers and the owner is frozen from match.freeze.
 var globalController: CustomGameObject = null; // This stores all our data
 
 /**
  *  Set this to true if you want this assist to apply to all players, Absolutely do not change it after the fact. 
+ * 	Set this to false if you only want it for the user.
 */
-var MULTIPLAYER = true;
+var MULTIPLAYER = false;
 
 
 function controllerId() {
@@ -46,8 +47,8 @@ function isRunning() {
 
 
 /**
- * Creates a "controller" object which helps other special modes know if this is being used, nothing will happen
- * nothing will happen if another special mode with the same controller is found(e.g 2 players have the same special mode)
+ * Creates a "controller" object which helps other users of this assistController know if this is being used, nothing will happen
+ * nothing will happen if someone else already has multiplayer active.
  */
 function createController() {
 	if (!isRunning()) {
