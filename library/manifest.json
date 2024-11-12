@@ -1,17 +1,17 @@
 {
-  "resourceId": "specialmodetemplate",
+  "resourceId": "assistcontrollertemplate",
   "content": [
     {
-      "id": "speciammodetemplate",
-      "name": "Sudden Death",
-      "description": "Every Hit is Fatal!",
+      "id": "assistControllerTemplate",
+      "name": "Assist Controller Template",
+      "description": "Demonstrates what the assist controller can do",
       "type": "assist",
       "objectStatsId": "assisttemplateAssistObjectStats",
       "animationStatsId": "assisttemplateAnimationStats",
       "hitboxStatsId": "assisttemplateHitboxStats",
       "scriptId": "nothingScript",
       "costumesId": "assisttemplateCostumes",
-      "assistControllerId": "specialModeController",
+      "assistControllerId": "assistController",
       "metadata": {
         "ui": {
           "entityId": "menu",
@@ -37,9 +37,9 @@
       "type": "customGameObject"
     },
     {
-      "id": "specialModeController",
+      "id": "assistController",
       "type": "assistController",
-      "scriptId": "specialmodetemplateScript"
+      "scriptId": "assistControllerScript"
     }
   ]
 }

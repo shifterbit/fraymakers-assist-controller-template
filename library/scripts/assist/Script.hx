@@ -1,11 +1,16 @@
 var enabled = self.makeBool(false);
-var prefix = "specialModeType_";
-var modeName = "suddenDeath"; // change this to the special mode name you want
+var prefix = "";
+var modeName = "suddenDeath"; // CHANGE THIS TO SOMETHING UNIQUE
 var globalDummy: Projectile = null; // We can create a projectile and assign it to this temporarily in case we need timers and the owner is frozen from match.freeze.
 var globalController: CustomGameObject = null; // This stores all our data
 
+/**
+ *  Set this to true if you want this assist to apply to all players, Absolutely do not change it after the fact. 
+*/
+var MULTIPLAYER = true;
 
-function modeId() {
+
+function controllerId() {
 	return prefix + modeName;
 }
 
@@ -21,18 +26,22 @@ function getContent(id: String) {
 /**
  * Checks if an identical specialMode is running, returns false if no control object with this special mode is found.
  */
-function isRunning(mode: String) {
-	var objs: Array<CustomGameObject> = match.getCustomGameObjects();
-	var foundExisting = false;
-	Engine.forEach(objs, function (obj: CustomGameObject, _idx: Int) {
-		if (obj.exports.specialModeType == slug(mode)) {
-			foundExisting = true;
-			return false;
-		} else {
-			return true;
-		}
-	}, []);
-	return foundExisting;
+function isRunning() {
+	if (MULTIPLAYER) {
+		var objs: Array<CustomGameObject> = match.getCustomGameObjects();
+		var foundExisting = false;
+		Engine.forEach(objs, function (obj: CustomGameObject, _idx: Int) {
+			if (obj.exports.id == controllerId()) {
+				foundExisting = true;
+				return false;
+			} else {
+				return true;
+			}
+		}, []);
+		return foundExisting;
+	} else {
+		return false;
+	}
 }
 
 
@@ -40,13 +49,15 @@ function isRunning(mode: String) {
  * Creates a "controller" object which helps other special modes know if this is being used, nothing will happen
  * nothing will happen if another special mode with the same controller is found(e.g 2 players have the same special mode)
  */
-function createController(mode: String) {
-	if (!isRunning(mode)) {
+function createController() {
+	if (!isRunning()) {
 		var player: Character = self.getOwner();
 		var resource: String = player.getAssistContentStat("spriteContent") + "controller";
 		var controller: CustomGameObject = match.createCustomGameObject(resource, player);
-		controller.exports.specialModeType = modeId();
-		controller.exports.data = {}; // we can use this field to store and update whatever data we need for our mode 
+		controller.exports.id = controllerId();
+		controller.exports.data = {
+			meters: [null, null, null, null]
+		}; // we can use this field to store and update whatever data we need for our mode 
 		globalController = controller;
 		/**
 		 * Initializing Data:
@@ -70,70 +81,139 @@ function createController(mode: String) {
 		 * 
 		 * Make sure you have created the fields *BEFORE* you access it
 		 * 
+		 * Generally speaking you want to kinda duplicate the fields you want in an array of 4
+		 * e.g if you want to store a number for each player you store the field as [0,0,0,0]
+		 * if its a list [ [], [], [], []],
+		 * Similar idea applies to strings, sprite objects, gameobjects, literally anything
+		 * while its easier to just use a single variable directly, doing it this way makes adding multiplayer support
+		 * a literal single line change
+		 * 
 		 */
 	}
 }
 
+function berserkMode(player: Character) {
+	var port: int = player.getPlayerConfig().port;
+	var meter: Sprite = globalController.exports.data.meters[port];
 
-/***
- * Generates the ui element on the damage container on the player
- */
-function createIndicator() {
-	var player: Character = self.getOwner();
-	var container: Container = player.getDamageCounterContainer();
-	var resource: String = player.getAssistContentStat("spriteContent") + "modeIndicator"; // probably wanna edit the sprite for this
-	var sprite = Sprite.create(resource);
-	// May wanna adjust these depending on your sprite size
-	sprite.scaleY = 0.6;
-	sprite.scaleX = 0.6;
-	sprite.y = sprite.y + 12;
-	sprite.x = sprite.x + (8 * 13);
-	container.addChild(sprite);
-}
-
-
-/** 
- * Checks if any item in the array is either equal to or is a subtring of the target
- * @param {String[]} arr - array of strings
- * @param {String} target - target string
- */
-function containsString(arr: Array<String>, item: String) {
-	for (i in arr) {
-		if (i == item) {
-			return true;
-		}
+	if (!player.isOnFloor()) {
+		player.playAnimation("assist_call_air");
+	} else {
+		player.playAnimation("assist_call");
 	}
-	return false;
+
+	var outerGlow = new GlowFilter();
+	outerGlow.color = 0xFF0000;
+	var middleGlow = new GlowFilter();
+	middleGlow.color = 0xF95D74;
+	var innerGlow = new GlowFilter();
+	innerGlow.color = 0xFFFFFF;
+	player.addFilter(innerGlow);
+	player.addFilter(middleGlow);
+	player.addFilter(outerGlow);
+
+	function boostDamage(event: GameObjectEvent) {
+		var baseDamage = event.data.hitboxStats.damage;
+		event.data.hitboxStats.damage = baseDamage * 2;
+		meter.currentFrame = 0;
+	};
+
+	function removeMode() {
+		player.removeEventListener(GameObjectEvent.HITBOX_CONNECTED, boostDamage);
+		player.removeFilter(outerGlow);
+		player.removeFilter(middleGlow);
+		player.removeFilter(innerGlow);
+	}
+	player.addEventListener(GameObjectEvent.HITBOX_CONNECTED, boostDamage, { persistent: true });
+
+	player.addTimer(1, 60 * 10, function () {
+		meter.currentFrame = 0;
+	}, { persistent: true });
+
+	player.addTimer(60 * 10, 1, removeMode, { persistent: true });
+}
+
+function createMeter(player: Character) {
+	var damageContainer = player.getDamageCounterContainer();
+	var res = getContent("meter");
+	var sprite = Sprite.create(res);
+	sprite.scaleX = 0.3;
+	sprite.scaleY = 0.25;
+	sprite.x = 64 + 32 + 8 + 8;
+	sprite.y = 36;
+	sprite.currentFrame = 0;
+	damageContainer.addChild(sprite);
+
+	return sprite;
 }
 
 
+function activateMeter(player: Character) {
+	var port: Int = player.getPlayerConfig().port;
+	var meter: Sprite = globalController.exports.data.meters[port];
+
+	player.addTimer(1, -1, function () {
+
+		// Taunt refills meter in training mode
+		if ((match.getMatchSettingsConfig().matchRules[0].contentId == "infinitelives")) {
+			if (meter.currentFrame >= 100) {
+				meter.currentFrame = 100;
+			} else {
+				meter.currentFrame += 1;
+			}
+		}
+		if (player.getHeldControls().EMOTE && meter.currentFrame == 100) {
+			meter.currentFrame = 0;
+			berserkMode(player);
+		}
 
 
-function enableSpecialMode() {
+	}, { persistent: true });
+
+	player.addEventListener(GameObjectEvent.HIT_DEALT, function (event: GameObjectEvent) {
+		var charge = meter.currentFrame;
+		if (!event.data.foe.hasBodyStatus(BodyStatus.INVINCIBLE)) {
+			var damage = Math.ceil(event.data.hitboxStats.damage);
+			if (charge + damage >= 100) {
+				meter.currentFrame = 100;
+			} else {
+				meter.currentFrame += damage;
+			}
+		}
+
+	}, { persistent: true });
+}
+
+function activateModeForPlayer(player: Character) {
+	var port: Int = player.getPlayerConfig().port;
+	globalController.exports.data.meters[port] = createMeter(player);
+	activateMeter(player);
+}
+
+function activateMode() {
 	var players = match.getPlayers();
-	Engine.forEach(players, function (player: Character, _idx: Int) {
-		player.setDamage(300);
-		player.addEventListener(CharacterEvent.RESPAWN,
-			function (event: GameObjectEvent) {
-				event.data.self.setDamage(300);
-			}, { persistent: true });
-
-		return true;
-	}, []);
-
+	if (MULTIPLAYER) {
+		Engine.forEach(players, function (player: Character, _idx: Int) {
+			activateModeForPlayer(player);
+			return true;
+		}, []);
+	} else {
+		activateModeForPlayer(self.getOwner());
+	}
 }
 
-function enableMode() {
-	var mode = modeId();
+function activateController() {
+	var mode = controllerId();
 	if (!isRunning(mode)) {
-		createIndicator();
 		createController(mode);
-		enableSpecialMode();
+		activateMode();
 	}
 }
 
 // Runs on object init
 function initialize() {
+	prefix = getContent(""); // We set the prefix here to our content id, so it can be unique
+
 }
 
 function update() {
@@ -156,7 +236,7 @@ function update() {
 		us enough space to check for duplicates.
 		 */
 		player.addTimer((1 + port) * 5, 1, function () {
-			enableMode();
+			activateController();
 		}, { persistent: true });
 	}
 }

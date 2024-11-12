@@ -1,7 +1,7 @@
 {
   "export": true,
   "guid": "c86908ec-03e1-461b-a7f3-5d2e0f12372a",
-  "id": "specialmodetemplateScript",
+  "id": "assistControllerScript",
   "language": "hscript",
   "pluginMetadata": {
     "com.fraymakers.FraymakersMetadata": {

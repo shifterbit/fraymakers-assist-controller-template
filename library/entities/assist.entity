@@ -12,7 +12,7 @@
   ],
   "export": true,
   "guid": "7d894719-cac4-440b-9836-0d0afdb686c0",
-  "id": "assist",
+  "id": "assistControllerTemplate",
   "keyframes": [
     {
       "$id": "f827ae05-d841-48c5-be2e-0a7f4651e380",
